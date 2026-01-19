@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { 
   Booking, 
@@ -146,8 +145,10 @@ export const useStore = () => {
   const signup = async (name: string, email: string, phone: string, password?: string) => {
     if (!password) return false;
 
-    // We use window.location.origin to ensure the user is redirected back to the correct environment (GitHub Pages or Localhost)
-    const redirectUrl = window.location.origin + window.location.pathname;
+    // Build the absolute redirect URL based on the current window location.
+    // This correctly handles both localhost:3000/ and username.github.io/repo/
+    const baseUrl = window.location.origin + window.location.pathname;
+    const redirectUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
 
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
