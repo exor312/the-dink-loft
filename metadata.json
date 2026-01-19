@@ -1,0 +1,8 @@
+
+{
+  "name": "The Dink Loft",
+  "description": "A premium pickleball facility management platform featuring real-time booking, court scheduling, and admin dashboard.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
