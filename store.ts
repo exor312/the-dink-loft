@@ -32,7 +32,6 @@ const mapEvent = (db: any): Event => ({
   description: db.description,
   date: db.date,
   time: db.time,
-  // Fix: Property name must match Event interface definition 'registrationLink'
   registrationLink: db.registration_link,
   imageUrl: db.image_url
 });
@@ -147,10 +146,14 @@ export const useStore = () => {
   const signup = async (name: string, email: string, phone: string, password?: string) => {
     if (!password) return false;
 
+    // We use window.location.origin to ensure the user is redirected back to the correct environment (GitHub Pages or Localhost)
+    const redirectUrl = window.location.origin + window.location.pathname;
+
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: redirectUrl,
         data: { full_name: name, phone }
       }
     });
